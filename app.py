@@ -7,15 +7,14 @@ is enforced with the @login_required and @role_required decorators.
 """
 
 import functools
+import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from database import get_connection, initialize_database
 
 app = Flask(__name__)
-import os
-app.secret_key = os.environ.get("SECRET_KEY")
-
+app.config["SECRET_KEY"] = "development-secret-key-change-this"
 
 # ---------------------------------------------------------------------------
 # Auth helpers
@@ -646,9 +645,9 @@ def forbidden(e):
 
 @app.errorhandler(404)
 def not_found(e):
-    return render_template("error.html", code=404, message="That page doesn\u2019t exist."), 404
+    return render_template("error.html", code=404, message="The requested resource was not found."), 404
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
-
+initialize_database()
 if __name__ == "__main__":
-    initialize_database()
     app.run(host="0.0.0.0", port=5000, debug=True)
