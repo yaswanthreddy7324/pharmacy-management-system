@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if medicine else 'Add' }} Medicine{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Inventory</span>
+    <h1>{{ 'Edit Medicine' if medicine else 'Add New Medicine' }}</h1>
+  </div>
+</div>
+
+<form method="post" class="form-card">
+  <div class="field">
+    <label for="name">Medicine name</label>
+    <input type="text" id="name" name="name" required value="{{ medicine.name if medicine else '' }}">
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label for="manufacturer">Manufacturer</label>
+      <input type="text" id="manufacturer" name="manufacturer" value="{{ medicine.manufacturer if medicine else '' }}">
+    </div>
+    <div class="field">
+      <label for="category">Category</label>
+      <input type="text" id="category" name="category" placeholder="e.g. Painkiller" value="{{ medicine.category if medicine else '' }}">
+    </div>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label for="batch_no">Batch number</label>
+      <input type="text" id="batch_no" name="batch_no" value="{{ medicine.batch_no if medicine else '' }}">
+    </div>
+    <div class="field">
+      <label for="expiry_date">Expiry date</label>
+      <input type="date" id="expiry_date" name="expiry_date" value="{{ medicine.expiry_date if medicine else '' }}">
+    </div>
+  </div>
+
+  <div class="field-row-3">
+    <div class="field">
+      <label for="quantity">Quantity in stock</label>
+      <input type="number" id="quantity" name="quantity" min="0" required value="{{ medicine.quantity if medicine else 0 }}">
+    </div>
+    <div class="field">
+      <label for="unit_price">Unit price (₹)</label>
+      <input type="number" id="unit_price" name="unit_price" min="0" step="0.01" required value="{{ medicine.unit_price if medicine else '' }}">
+    </div>
+    <div class="field">
+      <label for="reorder_level">Reorder level</label>
+      <input type="number" id="reorder_level" name="reorder_level" min="0" value="{{ medicine.reorder_level if medicine else 10 }}">
+      <div class="hint">Low-stock alert threshold</div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{{ 'Save Changes' if medicine else 'Add Medicine' }}</button>
+    <a href="{{ url_for('medicines') }}" class="btn btn-secondary">Cancel</a>
+  </div>
+</form>
+
+{% endblock %}

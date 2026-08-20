@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Admin</span>
+    <h1>Reports</h1>
+  </div>
+</div>
+
+<form method="get" class="search-bar">
+  <input type="date" name="start" value="{{ start }}">
+  <span class="muted" style="align-self:center;">to</span>
+  <input type="date" name="end" value="{{ end }}">
+  <button type="submit" class="btn btn-secondary">Filter</button>
+</form>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <span class="stat-label">Bills in Range</span>
+    <span class="stat-value">{{ bill_count }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Total Revenue</span>
+    <span class="stat-value">₹{{ "%.2f"|format(total_revenue) }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Average Bill</span>
+    <span class="stat-value">₹{{ "%.2f"|format(avg_bill) }}</span>
+  </div>
+</div>
+
+<div class="two-col">
+  <div>
+    <h3 class="section-title">Top-Selling Medicines</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Medicine</th><th class="text-right">Qty Sold</th><th class="text-right">Revenue</th></tr></thead>
+        <tbody>
+          {% for m in top_medicines %}
+          <tr><td>{{ m.medicine_name }}</td><td class="text-right num">{{ m.total_qty }}</td><td class="text-right num">₹{{ "%.2f"|format(m.total_sales) }}</td></tr>
+          {% else %}
+          <tr class="empty-row"><td colspan="3">No sales in this range.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="section-title">Revenue by Payment Method</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Method</th><th class="text-right">Bills</th><th class="text-right">Total</th></tr></thead>
+        <tbody>
+          {% for r in by_payment %}
+          <tr><td>{{ r.payment_method }}</td><td class="text-right num">{{ r.cnt }}</td><td class="text-right num">₹{{ "%.2f"|format(r.total) }}</td></tr>
+          {% else %}
+          <tr class="empty-row"><td colspan="3">No billing data yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="section-title">Low Stock</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Medicine</th><th class="text-right">Qty</th></tr></thead>
+        <tbody>
+          {% for m in low_stock %}
+          <tr><td>{{ m.name }}</td><td class="text-right num" style="color: var(--alert);">{{ m.quantity }}</td></tr>
+          {% else %}
+          <tr class="empty-row"><td colspan="2">All medicines sufficiently stocked.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

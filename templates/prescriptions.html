@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Prescriptions{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Dispense</span>
+    <h1>Prescriptions</h1>
+  </div>
+  <a href="{{ url_for('add_patient') }}?prescribe=1" class="btn btn-primary">+ New Prescription</a>
+</div>
+
+<div class="filter-tabs">
+  <a href="{{ url_for('prescriptions', status='Pending') }}" class="filter-tab {{ 'active' if status_filter == 'Pending' }}">Pending</a>
+  <a href="{{ url_for('prescriptions', status='Billed') }}" class="filter-tab {{ 'active' if status_filter == 'Billed' }}">Billed</a>
+  <a href="{{ url_for('prescriptions', status='All') }}" class="filter-tab {{ 'active' if status_filter == 'All' }}">All</a>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Rx</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for p in prescriptions %}
+      <tr>
+        <td class="mono">#{{ p.prescription_id }}</td>
+        <td><strong>{{ p.patient_name }}</strong></td>
+        <td>{{ p.doctor_name or '—' }}</td>
+        <td class="muted">{{ p.created_at }}</td>
+        <td>
+          {% if p.status == 'Pending' %}<span class="pill pill-pending">Pending</span>
+          {% elif p.status == 'Billed' %}<span class="pill pill-billed">Billed</span>
+          {% else %}<span class="pill pill-cancelled">Cancelled</span>{% endif %}
+        </td>
+        <td class="text-right">
+          <a href="{{ url_for('view_prescription', prescription_id=p.prescription_id) }}" class="btn btn-secondary btn-sm">View</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="6">No prescriptions in this view.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

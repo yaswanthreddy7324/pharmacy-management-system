@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Register Patient{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Patients</span>
+    <h1>Register Patient</h1>
+  </div>
+</div>
+
+<form method="post" class="form-card">
+  <div class="field">
+    <label for="name">Full name</label>
+    <input type="text" id="name" name="name" required autofocus>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" min="0">
+    </div>
+    <div class="field">
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender">
+        <option value="">Select…</option>
+        <option value="Female">Female</option>
+        <option value="Male">Male</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="phone">Phone</label>
+    <input type="tel" id="phone" name="phone">
+  </div>
+
+  {% if preselect_prescribe %}
+  <input type="hidden" name="next" value="prescribe">
+  <div class="hint" style="margin-bottom: 18px;">You&rsquo;ll go straight to writing a prescription for this patient after saving.</div>
+  {% endif %}
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">{{ 'Save & Write Prescription' if preselect_prescribe else 'Register Patient' }}</button>
+    <a href="{{ url_for('patients') }}" class="btn btn-secondary">Cancel</a>
+  </div>
+</form>
+
+{% endblock %}

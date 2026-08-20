@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}New Prescription{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Dispense</span>
+    <h1>New Prescription</h1>
+  </div>
+</div>
+
+<form method="post" class="form-card" style="max-width: 720px;">
+  <div class="field-row">
+    <div class="field">
+      <label for="patient_id">Patient</label>
+      <select id="patient_id" name="patient_id" required>
+        <option value="">Select a patient…</option>
+        {% for p in patients %}
+        <option value="{{ p.patient_id }}" {{ 'selected' if preselect_patient == p.patient_id }}>{{ p.name }} (#{{ p.patient_id }})</option>
+        {% endfor %}
+      </select>
+      <div class="hint">Need someone new? <a href="{{ url_for('add_patient') }}">Register a patient</a> first.</div>
+    </div>
+    <div class="field">
+      <label for="doctor_name">Prescribing doctor</label>
+      <input type="text" id="doctor_name" name="doctor_name" placeholder="Dr. ___">
+    </div>
+  </div>
+
+  <h3 class="section-title">Medicines</h3>
+  <div id="rx-items"></div>
+  <button type="button" class="add-item-link" onclick="addRxRow()">+ Add medicine</button>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Create Prescription</button>
+    <a href="{{ url_for('prescriptions') }}" class="btn btn-secondary">Cancel</a>
+  </div>
+</form>
+
+<template id="rx-row-template">
+  <div class="rx-item-row">
+    <div>
+      <select name="medicine_id[]" required>
+        <option value="">Select medicine…</option>
+        {% for m in medicines %}
+        <option value="{{ m.medicine_id }}">{{ m.name }} — ₹{{ "%.2f"|format(m.unit_price) }} ({{ m.quantity }} in stock)</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <input type="number" name="quantity[]" min="1" placeholder="Qty" required>
+    </div>
+    <div>
+      <input type="text" name="dosage_note[]" placeholder="e.g. 1 tablet twice daily">
+    </div>
+    <button type="button" class="rx-remove-btn" onclick="this.closest('.rx-item-row').remove()">Remove</button>
+  </div>
+</template>
+
+<script>
+function addRxRow() {
+  const template = document.getElementById('rx-row-template');
+  const clone = template.content.cloneNode(true);
+  document.getElementById('rx-items').appendChild(clone);
+}
+// Start with one row ready to fill in
+addRxRow();
+</script>
+
+{% endblock %}

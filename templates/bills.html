@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Bills{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Dispense</span>
+    <h1>Bills</h1>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Bill</th><th>Patient</th><th>Payment</th><th>Date</th><th class="text-right">Total</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for b in bills %}
+      <tr>
+        <td class="mono">#{{ b.bill_id }}</td>
+        <td><strong>{{ b.patient_name }}</strong></td>
+        <td>{{ b.payment_method }}</td>
+        <td class="muted">{{ b.created_at }}</td>
+        <td class="text-right num">₹{{ "%.2f"|format(b.total_amount) }}</td>
+        <td class="text-right"><a href="{{ url_for('view_bill', bill_id=b.bill_id) }}" class="btn btn-secondary btn-sm">View</a></td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="6">No bills generated yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

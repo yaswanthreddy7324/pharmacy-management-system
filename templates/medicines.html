@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Inventory{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Records</span>
+    <h1>Inventory</h1>
+  </div>
+  {% if current_user.role == 'Admin' %}
+  <a href="{{ url_for('add_medicine') }}" class="btn btn-primary">+ Add Medicine</a>
+  {% endif %}
+</div>
+
+<form class="search-bar" method="get">
+  <input type="text" name="q" placeholder="Search medicines…" value="{{ query }}">
+  <button type="submit" class="btn btn-secondary">Search</button>
+</form>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th><th>Category</th><th>Batch</th><th>Expiry</th>
+        <th class="text-right">Qty</th><th class="text-right">Price</th><th>Status</th>
+        {% if current_user.role == 'Admin' %}<th></th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in medicines %}
+      <tr>
+        <td><strong>{{ m.name }}</strong><br><span class="muted" style="font-size:12px;">{{ m.manufacturer or '—' }}</span></td>
+        <td>{{ m.category or '—' }}</td>
+        <td class="mono">{{ m.batch_no or '—' }}</td>
+        <td class="mono">{{ m.expiry_date or '—' }}</td>
+        <td class="text-right num">{{ m.quantity }}</td>
+        <td class="text-right num">₹{{ "%.2f"|format(m.unit_price) }}</td>
+        <td>
+          {% if m.quantity <= m.reorder_level %}
+          <span class="pill pill-low">Low stock</span>
+          {% else %}
+          <span class="pill pill-ok">In stock</span>
+          {% endif %}
+        </td>
+        {% if current_user.role == 'Admin' %}
+        <td class="text-right">
+          <a href="{{ url_for('edit_medicine', medicine_id=m.medicine_id) }}" class="btn btn-secondary btn-sm">Edit</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="8">No medicines match your search.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

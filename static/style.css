@@ -1,0 +1,592 @@
+/* ==========================================================================
+   Meridian Pharmacy — design tokens
+   Grounded in the subject: apothecary labels, amber pill bottles, printed
+   receipts. Deep pine ink, muted pharmacy-teal brand, amber accent used
+   sparingly for the things that matter (alerts, prices, the Rx mark).
+   ========================================================================== */
+
+:root {
+  --paper: #F4F6F4;
+  --paper-raised: #FFFFFF;
+  --ink: #16302B;
+  --ink-soft: #4B615C;
+  --line: #DDE3DC;
+  --line-strong: #C3CDC5;
+
+  --brand: #2F6F5E;
+  --brand-dark: #1F4E42;
+  --brand-tint: #E4EEEA;
+
+  --accent: #C87A1F;
+  --accent-tint: #FBEDDA;
+
+  --alert: #B8442F;
+  --alert-tint: #F8E3DE;
+
+  --font-display: 'Spectral', Georgia, serif;
+  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+
+  --radius: 3px;
+  --shadow-card: 0 1px 2px rgba(22, 48, 43, 0.06), 0 1px 1px rgba(22, 48, 43, 0.04);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a { color: inherit; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0 0 0.4em;
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Shell layout
+   ========================================================================== */
+
+.shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 232px;
+  flex-shrink: 0;
+  background: var(--brand-dark);
+  color: #E9F0EC;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 24px 28px;
+  border-bottom: 1px solid rgba(233, 240, 236, 0.14);
+  margin-bottom: 16px;
+}
+
+.brand-mark {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+}
+.brand-name em { font-style: italic; opacity: 0.75; font-weight: 500; }
+
+.nav { flex: 1; padding: 0 12px; overflow-y: auto; }
+
+.nav-group-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: rgba(233, 240, 236, 0.45);
+  padding: 16px 12px 6px;
+}
+.nav-group-label:first-child { padding-top: 4px; }
+
+.nav-item {
+  display: block;
+  padding: 9px 12px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: rgba(233, 240, 236, 0.82);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 1px;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.nav-item:hover { background: rgba(233, 240, 236, 0.08); color: #fff; }
+.nav-item.active {
+  background: rgba(233, 240, 236, 0.12);
+  color: #fff;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.sidebar-foot {
+  padding: 16px 24px 0;
+  border-top: 1px solid rgba(233, 240, 236, 0.14);
+  margin-top: 12px;
+}
+
+.staff-badge { margin-bottom: 10px; display: flex; flex-direction: column; }
+.staff-role {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.staff-name { font-family: var(--font-display); font-size: 15px; font-weight: 500; }
+
+.logout-link {
+  font-size: 13px;
+  color: rgba(233, 240, 236, 0.6);
+  text-decoration: none;
+}
+.logout-link:hover { color: #fff; text-decoration: underline; }
+
+.content {
+  flex: 1;
+  padding: 36px 44px 60px;
+  max-width: 1120px;
+}
+
+/* ==========================================================================
+   Page header
+   ========================================================================== */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 28px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.page-header h1 { font-size: 28px; }
+.page-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: 6px;
+  display: block;
+}
+.page-subtitle { color: var(--ink-soft); font-size: 14px; margin-top: 4px; }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.2;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: var(--brand-dark); }
+.btn-secondary { background: var(--paper-raised); color: var(--ink); border-color: var(--line-strong); }
+.btn-secondary:hover { border-color: var(--brand); }
+.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent:hover { background: #A5650E; }
+.btn-danger { background: var(--paper-raised); color: var(--alert); border-color: var(--alert); }
+.btn-danger:hover { background: var(--alert-tint); }
+.btn-sm { padding: 6px 11px; font-size: 12.5px; }
+.btn-block { width: 100%; justify-content: center; }
+.btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+/* ==========================================================================
+   Cards — the signature element: prescription-label styling.
+   Dashed top edge like a perforated label, small Rx corner mark.
+   ========================================================================== */
+
+.card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.label-card {
+  padding: 22px 24px;
+}
+.label-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 16px; right: 16px;
+  border-top: 1.5px dashed var(--line-strong);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-card);
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 8px;
+}
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 600;
+}
+.stat-value.alert { color: var(--alert); }
+.stat-value.accent { color: var(--accent); }
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+.table-wrap {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+table { width: 100%; border-collapse: collapse; }
+
+thead th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: var(--paper);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+tbody td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  vertical-align: middle;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--paper); }
+
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--font-mono); }
+
+.empty-row td { padding: 40px 16px; text-align: center; color: var(--ink-soft); }
+
+/* ==========================================================================
+   Badges / status pills
+   ========================================================================== */
+
+.pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.pill-pending { background: var(--accent-tint); color: #8A5613; }
+.pill-billed { background: var(--brand-tint); color: var(--brand-dark); }
+.pill-cancelled { background: #EDEDED; color: #767676; }
+.pill-ok { background: var(--brand-tint); color: var(--brand-dark); }
+.pill-low { background: var(--alert-tint); color: var(--alert); }
+.pill-admin { background: #EAE1F5; color: #5B3B8C; }
+.pill-pharmacist { background: var(--brand-tint); color: var(--brand-dark); }
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+.form-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 28px 30px;
+  max-width: 640px;
+}
+
+.field { margin-bottom: 18px; }
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.field .hint { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+
+input[type=text], input[type=number], input[type=password], input[type=date], input[type=tel], select, textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  background: #fff;
+}
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+.form-actions { display: flex; gap: 10px; margin-top: 24px; }
+
+/* ==========================================================================
+   Prescription line-item builder
+   ========================================================================== */
+
+.rx-item-row {
+  display: grid;
+  grid-template-columns: 2fr 90px 1.4fr auto;
+  gap: 10px;
+  align-items: start;
+  padding: 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+}
+
+.rx-remove-btn {
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 9px 11px;
+  font-size: 13px;
+  height: fit-content;
+}
+.rx-remove-btn:hover { border-color: var(--alert); color: var(--alert); }
+
+.add-item-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--brand);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px 0;
+}
+
+/* ==========================================================================
+   Receipt (the label motif, fully realized)
+   ========================================================================== */
+
+.receipt {
+  max-width: 460px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 0;
+  font-family: var(--font-mono);
+}
+
+.receipt-band {
+  background: var(--brand-dark);
+  color: #fff;
+  padding: 18px 24px;
+  text-align: center;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.receipt-band .rx-mark { font-family: var(--font-display); font-size: 26px; color: var(--accent); display: block; }
+.receipt-band .receipt-title { font-family: var(--font-display); font-size: 17px; font-weight: 600; margin-top: 2px; }
+.receipt-band .receipt-id { font-size: 11px; opacity: 0.7; letter-spacing: 0.06em; margin-top: 4px; }
+
+.receipt-body { padding: 22px 24px; }
+.receipt-meta { font-size: 12px; color: var(--ink-soft); margin-bottom: 16px; line-height: 1.7; }
+.receipt-meta strong { color: var(--ink); font-weight: 600; }
+
+.receipt-divider {
+  border: none;
+  border-top: 1.5px dashed var(--line-strong);
+  margin: 16px 0;
+}
+
+.receipt-line { display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0; }
+.receipt-line .item-name { color: var(--ink); }
+.receipt-line .item-detail { color: var(--ink-soft); }
+
+.receipt-totals .receipt-line { font-size: 13px; }
+.receipt-totals .grand-total { font-size: 16px; font-weight: 600; color: var(--brand-dark); padding-top: 8px; }
+
+.receipt-actions { padding: 0 24px 24px; display: flex; gap: 10px; }
+
+@media print {
+  .sidebar, .flash-stack, .receipt-actions, .page-header .btn { display: none !important; }
+  .content { padding: 0; max-width: none; }
+  .receipt { box-shadow: none; border: 1px solid #999; margin: 0 auto; }
+}
+
+/* ==========================================================================
+   Flash messages
+   ========================================================================== */
+
+.flash-stack { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
+.flash {
+  padding: 11px 16px;
+  border-radius: var(--radius);
+  font-size: 13.5px;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+}
+.flash-success { background: var(--brand-tint); color: var(--brand-dark); border-left-color: var(--brand); }
+.flash-error { background: var(--alert-tint); color: var(--alert); border-left-color: var(--alert); }
+.flash-warning { background: var(--accent-tint); color: #8A5613; border-left-color: var(--accent); }
+
+/* ==========================================================================
+   Auth screen
+   ========================================================================== */
+
+.auth-body {
+  background: var(--brand-dark);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-shell {
+  display: flex;
+  width: 100%;
+  max-width: 840px;
+  min-height: 480px;
+  background: var(--paper-raised);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+
+.auth-side {
+  flex: 1;
+  background: var(--brand-dark);
+  background-image:
+    repeating-linear-gradient(135deg, rgba(233,240,236,0.035) 0px, rgba(233,240,236,0.035) 1px, transparent 1px, transparent 26px);
+  color: #E9F0EC;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.auth-side .rx-mark { font-family: var(--font-display); font-size: 56px; color: var(--accent); line-height: 1; }
+.auth-side h2 { color: #fff; font-size: 24px; margin-top: 14px; }
+.auth-side p { color: rgba(233,240,236,0.7); font-size: 13.5px; line-height: 1.6; }
+.auth-side .auth-footnote { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; color: rgba(233,240,236,0.45); }
+
+.auth-form-panel {
+  flex: 1;
+  padding: 48px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.auth-form-panel h1 { font-size: 22px; margin-bottom: 4px; }
+.auth-form-panel .auth-sub { color: var(--ink-soft); font-size: 13.5px; margin-bottom: 26px; }
+.auth-demo-creds {
+  margin-top: 20px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+
+/* ==========================================================================
+   Misc
+   ========================================================================== */
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 28px 0 12px;
+  padding-top: 4px;
+}
+.section-title:first-child { margin-top: 0; }
+
+.muted { color: var(--ink-soft); }
+.text-right { text-align: right; }
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.search-bar input { max-width: 280px; }
+
+.filter-tabs { display: flex; gap: 4px; margin-bottom: 20px; }
+.filter-tab {
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+.filter-tab.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+.two-col { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; align-items: start; }
+
+@media (max-width: 880px) {
+  .shell { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: relative; }
+  .content { padding: 24px; }
+  .two-col { grid-template-columns: 1fr; }
+  .auth-shell { flex-direction: column; max-width: 420px; }
+  .auth-side { padding: 32px; }
+}

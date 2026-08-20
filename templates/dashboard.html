@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Overview{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Shift Overview</span>
+    <h1>Good to see you, {{ current_user.full_name.split(' ')[0] }}</h1>
+  </div>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <span class="stat-label">Medicines Tracked</span>
+    <span class="stat-value">{{ medicine_count }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Low Stock Alerts</span>
+    <span class="stat-value {{ 'alert' if low_stock_count > 0 }}">{{ low_stock_count }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Pending Prescriptions</span>
+    <span class="stat-value {{ 'accent' if pending_count > 0 }}">{{ pending_count }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Today&rsquo;s Revenue</span>
+    <span class="stat-value">₹{{ "%.2f"|format(today_revenue) }}</span>
+  </div>
+</div>
+
+<div class="two-col">
+  <div>
+    <h3 class="section-title">Recent Bills</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bill</th><th>Patient</th><th>Date</th><th class="text-right">Total</th></tr>
+        </thead>
+        <tbody>
+          {% for b in recent_bills %}
+          <tr>
+            <td class="mono"><a href="{{ url_for('view_bill', bill_id=b.bill_id) }}">#{{ b.bill_id }}</a></td>
+            <td>{{ b.patient_name }}</td>
+            <td class="muted">{{ b.created_at }}</td>
+            <td class="text-right num">₹{{ "%.2f"|format(b.total_amount) }}</td>
+          </tr>
+          {% else %}
+          <tr class="empty-row"><td colspan="4">No bills generated yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="section-title">Quick Actions</h3>
+    <div class="label-card card" style="display:flex; flex-direction:column; gap:10px;">
+      <a href="{{ url_for('add_patient') }}?prescribe=1" class="btn btn-primary btn-block">New Prescription</a>
+      {% if current_user.role == 'Admin' %}
+      <a href="{{ url_for('add_medicine') }}" class="btn btn-secondary btn-block">Add Medicine</a>
+      {% endif %}
+      <a href="{{ url_for('prescriptions') }}" class="btn btn-secondary btn-block">View Pending Queue</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

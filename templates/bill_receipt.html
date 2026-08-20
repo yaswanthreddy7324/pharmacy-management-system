@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Bill #{{ bill.bill_id }}{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Bills</span>
+    <h1>Receipt</h1>
+  </div>
+</div>
+
+<div class="receipt">
+  <div class="receipt-band">
+    <span class="rx-mark">℞</span>
+    <div class="receipt-title">Meridian Pharmacy</div>
+    <div class="receipt-id">RECEIPT #{{ '%04d'|format(bill.bill_id) }}</div>
+  </div>
+
+  <div class="receipt-body">
+    <div class="receipt-meta">
+      <strong>Patient:</strong> {{ bill.patient_name }}<br>
+      <strong>Served by:</strong> {{ bill.staff_name }}<br>
+      <strong>Date:</strong> {{ bill.created_at }}<br>
+      <strong>Payment:</strong> {{ bill.payment_method }}
+    </div>
+
+    <hr class="receipt-divider">
+
+    {% for it in items %}
+    <div class="receipt-line">
+      <span class="item-name">{{ it.medicine_name }} × {{ it.quantity }}</span>
+      <span class="item-detail">₹{{ "%.2f"|format(it.line_total) }}</span>
+    </div>
+    {% endfor %}
+
+    <hr class="receipt-divider">
+
+    <div class="receipt-totals">
+      <div class="receipt-line"><span>Subtotal</span><span>₹{{ "%.2f"|format(bill.subtotal) }}</span></div>
+      <div class="receipt-line"><span>Discount ({{ bill.discount_percent }}%)</span><span>−₹{{ "%.2f"|format(discount_amount) }}</span></div>
+      <div class="receipt-line"><span>Tax ({{ bill.tax_percent }}%)</span><span>+₹{{ "%.2f"|format(tax_amount) }}</span></div>
+      <div class="receipt-line grand-total"><span>Total</span><span>₹{{ "%.2f"|format(bill.total_amount) }}</span></div>
+    </div>
+  </div>
+
+  <div class="receipt-actions">
+    <button onclick="window.print()" class="btn btn-secondary btn-block">Print Receipt</button>
+    <a href="{{ url_for('bills') }}" class="btn btn-primary btn-block">Back to Bills</a>
+  </div>
+</div>
+
+{% endblock %}

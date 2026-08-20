@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Staff Accounts{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Admin</span>
+    <h1>Staff Accounts</h1>
+  </div>
+  <a href="{{ url_for('add_user') }}" class="btn btn-primary">+ New Account</a>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Username</th><th>Full name</th><th>Role</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td class="mono">#{{ u.user_id }}</td>
+        <td class="mono">{{ u.username }}</td>
+        <td><strong>{{ u.full_name }}</strong></td>
+        <td>
+          {% if u.role == 'Admin' %}<span class="pill pill-admin">Admin</span>
+          {% else %}<span class="pill pill-pharmacist">Pharmacist</span>{% endif %}
+        </td>
+        <td>
+          {% if u.is_active %}<span class="pill pill-ok">Active</span>
+          {% else %}<span class="pill pill-cancelled">Inactive</span>{% endif %}
+        </td>
+        <td class="text-right">
+          {% if u.is_active and u.user_id != session.user_id %}
+          <form method="post" action="{{ url_for('deactivate_user', user_id=u.user_id) }}" style="display:inline;">
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Deactivate this account?')">Deactivate</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr class="empty-row"><td colspan="6">No staff accounts yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

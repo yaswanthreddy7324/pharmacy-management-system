@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Generate Bill{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div>
+    <span class="page-eyebrow">Prescription #{{ presc.prescription_id }}</span>
+    <h1>Generate Bill</h1>
+  </div>
+</div>
+
+<div class="two-col">
+  <div>
+    <h3 class="section-title">Items</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Medicine</th><th class="text-right">Qty</th><th class="text-right">Price</th><th class="text-right">Line total</th></tr></thead>
+        <tbody>
+          {% for it in items %}
+          <tr>
+            <td>{{ it.name }}</td>
+            <td class="text-right num">{{ it.quantity }}</td>
+            <td class="text-right num">₹{{ "%.2f"|format(it.unit_price) }}</td>
+            <td class="text-right num">₹{{ "%.2f"|format(it.quantity * it.unit_price) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="section-title">Charges</h3>
+    <form method="post" class="label-card card">
+      <div class="field">
+        <label for="discount_percent">Discount %</label>
+        <input type="number" id="discount_percent" name="discount_percent" min="0" max="100" step="0.1" value="0" oninput="recalc()">
+      </div>
+      <div class="field">
+        <label for="tax_percent">Tax % (e.g. GST)</label>
+        <input type="number" id="tax_percent" name="tax_percent" min="0" max="100" step="0.1" value="0" oninput="recalc()">
+      </div>
+      <div class="field">
+        <label for="payment_method">Payment method</label>
+        <select id="payment_method" name="payment_method">
+          <option value="Cash">Cash</option>
+          <option value="Card">Card</option>
+          <option value="UPI">UPI</option>
+        </select>
+      </div>
+
+      <hr class="receipt-divider">
+      <div class="receipt-line"><span>Subtotal</span><span class="num" id="prev-subtotal">₹{{ "%.2f"|format(totals.subtotal) }}</span></div>
+      <div class="receipt-line"><span>Discount</span><span class="num" id="prev-discount">−₹0.00</span></div>
+      <div class="receipt-line"><span>Tax</span><span class="num" id="prev-tax">+₹0.00</span></div>
+      <div class="receipt-line grand-total"><span>Total</span><span class="num" id="prev-total">₹{{ "%.2f"|format(totals.subtotal) }}</span></div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-accent btn-block">Confirm & Generate Bill</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const subtotal = {{ totals.subtotal }};
+function recalc() {
+  const discountPct = parseFloat(document.getElementById('discount_percent').value) || 0;
+  const taxPct = parseFloat(document.getElementById('tax_percent').value) || 0;
+  const discountAmt = subtotal * (discountPct / 100);
+  const taxable = subtotal - discountAmt;
+  const taxAmt = taxable * (taxPct / 100);
+  const total = taxable + taxAmt;
+  document.getElementById('prev-discount').textContent = '−₹' + discountAmt.toFixed(2);
+  document.getElementById('prev-tax').textContent = '+₹' + taxAmt.toFixed(2);
+  document.getElementById('prev-total').textContent = '₹' + total.toFixed(2);
+}
+</script>
+
+{% endblock %}

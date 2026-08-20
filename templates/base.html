@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Dashboard{% endblock %} · Meridian Pharmacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{% if not current_user %}auth-body{% endif %}">
+
+{% if current_user %}
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">℞</span>
+      <span class="brand-name">Meridian<br><em>Pharmacy</em></span>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group-label">Dispense</div>
+      <a href="{{ url_for('dashboard') }}" class="nav-item {{ 'active' if request.endpoint == 'dashboard' }}">Overview</a>
+      <a href="{{ url_for('prescriptions') }}" class="nav-item {{ 'active' if request.endpoint in ['prescriptions','add_prescription','view_prescription'] }}">Prescriptions</a>
+      <a href="{{ url_for('bills') }}" class="nav-item {{ 'active' if request.endpoint in ['bills','view_bill','generate_bill'] }}">Bills</a>
+
+      <div class="nav-group-label">Records</div>
+      <a href="{{ url_for('medicines') }}" class="nav-item {{ 'active' if request.endpoint in ['medicines','add_medicine','edit_medicine'] }}">Inventory</a>
+      <a href="{{ url_for('patients') }}" class="nav-item {{ 'active' if request.endpoint in ['patients','add_patient'] }}">Patients</a>
+
+      {% if current_user.role == 'Admin' %}
+      <div class="nav-group-label">Admin</div>
+      <a href="{{ url_for('reports') }}" class="nav-item {{ 'active' if request.endpoint == 'reports' }}">Reports</a>
+      <a href="{{ url_for('users') }}" class="nav-item {{ 'active' if request.endpoint in ['users','add_user'] }}">Staff Accounts</a>
+      {% endif %}
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="staff-badge">
+        <span class="staff-role">{{ current_user.role }}</span>
+        <span class="staff-name">{{ current_user.full_name }}</span>
+      </div>
+      <a href="{{ url_for('logout') }}" class="logout-link">Sign out</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack">
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+</div>
+{% else %}
+  {% block auth_content %}{% endblock %}
+{% endif %}
+
+</body>
+</html>
