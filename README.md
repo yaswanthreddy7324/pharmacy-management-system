@@ -1,78 +1,143 @@
-# 💊 Meridian Pharmacy – Smart Pharmacy Management System
+# 💊 Meridian Pharmacy — Smart Pharmacy Management System
 
 <p align="center">
-  <strong>A full-stack web-based pharmacy management system built with Python Flask and SQLite.</strong>
+  <strong>A full-stack web-based pharmacy management system built with Flask and SQLite.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask" alt="Flask">
-  <img src="https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white" alt="SQLite">
-  <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white" alt="HTML5">
-  <img src="https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white" alt="CSS3">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" alt="JavaScript">
-  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+  Manage medicines, patients, prescriptions, billing, staff accounts, and reports through a modern web interface.
+</p>
+
+<p align="center">
+
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![Flask](https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite)
+![HTML5](https://img.shields.io/badge/HTML5-Markup-E34F26?logo=html5)
+![CSS3](https://img.shields.io/badge/CSS3-Styling-1572B6?logo=css3)
+![JavaScript](https://img.shields.io/badge/JavaScript-Frontend-F7DF1E?logo=javascript)
+![License](https://img.shields.io/badge/License-MIT-green)
+
 </p>
 
 ---
 
 ## 📌 Project Overview
 
-**Meridian Pharmacy** is a web-based Pharmacy Management System designed to simplify and digitize common pharmacy operations.
+**Meridian Pharmacy** is a full-stack pharmacy management system designed to digitize and simplify common pharmacy operations.
 
-The application provides a centralized platform for managing medicines, patients, prescriptions, billing, users, and reports through an easy-to-use web interface.
+The application provides a centralized platform for:
 
-The system is built using **Python Flask** for the backend, **SQLite** for data storage, and **HTML/CSS/JavaScript** for the frontend.
+- 💊 Medicine inventory management
+- 👥 Patient management
+- 📝 Prescription management
+- 🧾 Billing and receipt generation
+- 👨‍⚕️ Staff account management
+- 📊 Sales and inventory reports
+- 🔐 Authentication and role-based access control
+
+The backend is built with **Python Flask**, data is stored using **SQLite**, and the frontend uses **HTML, CSS, JavaScript, and Jinja2 templates**.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-### 🔐 Authentication & User Management
-- Secure user login
-- User management
+### 🔐 Authentication & Authorization
+
+- Secure login system
 - Session-based authentication
-- Role-based access functionality
+- Role-based access control
+- Admin and Pharmacist roles
+- Password hashing using Werkzeug
+- Protected server-side routes
 
 ### 💊 Medicine Management
+
 - Add medicines
-- Update medicine information
-- Delete medicines
-- Search medicines
-- Track medicine stock
-- Manage medicine details
+- Edit medicine information
+- Track inventory quantity
+- Monitor low-stock medicines
+- Search medicine inventory
+- Automatically deduct stock after billing
 
-### 👨‍⚕️ Patient Management
-- Add patient records
-- Update patient information
-- View patient details
-- Search patients
-- Maintain patient history
+### 👥 Patient Management
 
-### 📋 Prescription Management
+- Register patients
+- View patient records
+- Search patient information
+- Connect patients with prescriptions and bills
+
+### 📝 Prescription Management
+
 - Create prescriptions
-- View prescriptions
-- Manage prescription details
-- Connect prescriptions with patients and medicines
+- Add multiple medicines dynamically
+- View prescription details
+- Track pending and billed prescriptions
+- Connect prescriptions directly to billing
 
 ### 🧾 Billing System
-- Create customer bills
-- Add medicines to bills
-- Calculate billing totals
-- Generate bill receipts
-- Maintain billing records
+
+- Generate bills from prescriptions
+- Automatic subtotal calculation
+- Discount support
+- Tax calculation
+- Stock validation
+- Automatic inventory deduction
+- Printable bill receipts
 
 ### 📊 Reports & Dashboard
-- Pharmacy dashboard
-- Medicine inventory overview
-- Patient statistics
-- Billing information
-- Pharmacy reports
 
-### ⚠️ Error Handling
-- Custom error pages
-- Form validation
-- User-friendly error messages
+- Medicine inventory statistics
+- Low-stock alerts
+- Pending prescription count
+- Daily revenue
+- Sales summary
+- Top-selling medicines
+- Revenue by payment method
+
+### 👨‍💼 Staff Management
+
+- Admin can create Pharmacist accounts
+- Admin can manage staff accounts
+- Different permissions for Admin and Pharmacist users
+
+---
+
+## 🖥️ Screenshots
+
+### 🔐 Login
+
+![Login](Screenshots/login.png)
+
+### 📊 Dashboard
+
+![Dashboard](Screenshots/dashboard.png)
+
+### 💊 Medicine Inventory
+
+![Medicines](Screenshots/medicines.png)
+
+### 👥 Patients
+
+![Patients](Screenshots/patients.png)
+
+### 📝 Prescriptions
+
+![Prescriptions](Screenshots/prescriptions.png)
+
+### 🧾 Billing
+
+![Billing](Screenshots/bills.png)
+
+### 🧾 Bill Receipt
+
+![Bill Receipt](Screenshots/bill_receipt.png)
+
+### 📈 Reports
+
+![Reports](Screenshots/reports.png)
+
+> **Note:** Make sure the filenames above exactly match the files inside the `Screenshots/` folder.
 
 ---
 
@@ -80,47 +145,40 @@ The system is built using **Python Flask** for the backend, **SQLite** for data 
 
 | Technology | Purpose |
 |------------|---------|
-| 🐍 Python | Backend programming |
-| 🌐 Flask | Web application framework |
-| 🗄️ SQLite | Database |
-| 🧱 HTML5 | Page structure |
-| 🎨 CSS3 | Styling |
-| ⚡ JavaScript | Client-side functionality |
-| 🔧 Git | Version control |
-| 🐙 GitHub | Source code hosting |
+| **Python** | Backend programming |
+| **Flask** | Web application framework |
+| **SQLite** | Database |
+| **HTML5** | Page structure |
+| **CSS3** | UI styling |
+| **JavaScript** | Client-side interactions |
+| **Jinja2** | Dynamic HTML templates |
+| **Werkzeug** | Password hashing and Flask utilities |
 
 ---
 
-## 🏗️ Project Architecture
+## 🏗️ Architecture
 
 ```text
-pharmacy-management-system/
-│
-├── app.py                  # Flask application
-├── database.py             # Database operations
-├── requirements.txt        # Python dependencies
-├── pharmacy.db             # Local SQLite database
-├── README.md               # Project documentation
-├── .gitignore              # Git ignored files
-│
-├── static/
-│   └── style.css           # Application styles
-│
-└── templates/
-    ├── base.html
-    ├── login.html
-    ├── dashboard.html
-    ├── medicines.html
-    ├── medicine_form.html
-    ├── patients.html
-    ├── patient_form.html
-    ├── prescriptions.html
-    ├── prescription_form.html
-    ├── prescription_detail.html
-    ├── bills.html
-    ├── billing_form.html
-    ├── bill_receipt.html
-    ├── users.html
-    ├── user_form.html
-    ├── reports.html
-    └── error.html
+                    ┌─────────────────────┐
+                    │      Browser        │
+                    │ HTML/CSS/JavaScript │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │      Flask App      │
+                    │       app.py        │
+                    │ Routes + Auth + RBAC│
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │     Data Layer      │
+                    │    database.py      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │       SQLite        │
+                    │    pharmacy.db      │
+                    └─────────────────────┘
