@@ -129,9 +129,9 @@ The backend is built with **Python Flask**, data is stored using **SQLite**, and
 
 ![Billing](Screenshots/billing.png)
 
-### 🧾 Bill Receipt
+### 🧾 Reports
 
-![Bill Receipt](Screenshots/bill_receipt.png)
+![Reports](Screenshots/reports.png)
 
 
 > **Note:** Make sure the filenames above exactly match the files inside the `Screenshots/` folder.
