@@ -1,62 +1,126 @@
-# Meridian Pharmacy — Smart Pharmacy Management System (Web Edition)
+# 💊 Meridian Pharmacy – Smart Pharmacy Management System
 
-A full website (not just CLI) built with **Python (Flask)** and **SQLite**, covering
-medicine inventory, patient records, prescriptions, and billing — with a login
-screen and role-based access control (Admin / Pharmacist).
+<p align="center">
+  <strong>A full-stack web-based pharmacy management system built with Python Flask and SQLite.</strong>
+</p>
 
-## Run it
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Flask-Web%20Framework-black?logo=flask" alt="Flask">
+  <img src="https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white" alt="SQLite">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white" alt="HTML5">
+  <img src="https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white" alt="CSS3">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</p>
 
-```bash
-pip install -r requirements.txt
-python3 app.py
-```
+---
 
-Then open **http://127.0.0.1:5000** in your browser.
+## 📌 Project Overview
 
-Default login (created automatically on first run):
-```
-username: admin
-password: admin123
-```
-Use the Admin account to create Pharmacist accounts under **Staff Accounts**.
+**Meridian Pharmacy** is a web-based Pharmacy Management System designed to simplify and digitize common pharmacy operations.
 
-## Architecture
+The application provides a centralized platform for managing medicines, patients, prescriptions, billing, users, and reports through an easy-to-use web interface.
 
-| File / folder        | Responsibility |
-|-----------------------|----------------|
-| `app.py`               | Flask routes, session-based auth, RBAC decorators, billing math |
-| `database.py`          | SQLite schema, connection helper, seed admin account |
-| `templates/`           | Jinja2 HTML templates (one per page) |
-| `static/style.css`     | The full design system — one stylesheet, no framework |
-| `requirements.txt`     | Python dependencies |
+The system is built using **Python Flask** for the backend, **SQLite** for data storage, and **HTML/CSS/JavaScript** for the frontend.
 
-The app follows Flask's standard MVC-ish split: `database.py` is the data layer,
-route functions in `app.py` are the controllers, and `templates/*.html` are the views.
-Business logic (bill totals: subtotal → discount → tax → total) lives in
-`calculate_totals()` in `app.py`.
+---
 
-## Roles & permissions
+## ✨ Features
 
-- **Admin** — everything, plus: add/edit medicines, manage staff accounts, view reports.
-- **Pharmacist** — register patients, write prescriptions, generate bills, view inventory (read-only).
+### 🔐 Authentication & User Management
+- Secure user login
+- User management
+- Session-based authentication
+- Role-based access functionality
 
-Every sensitive route is wrapped in `@role_required("Admin")` or `@login_required`
-in `app.py`, so permissions are enforced on the server regardless of what the UI shows.
+### 💊 Medicine Management
+- Add medicines
+- Update medicine information
+- Delete medicines
+- Search medicines
+- Track medicine stock
+- Manage medicine details
 
-## Pages
+### 👨‍⚕️ Patient Management
+- Add patient records
+- Update patient information
+- View patient details
+- Search patients
+- Maintain patient history
 
-- `/login` — sign in
-- `/` — dashboard with live stats (inventory count, low-stock alerts, pending prescriptions, today's revenue)
-- `/medicines` — inventory list + search; `/medicines/add`, `/medicines/<id>/edit` (Admin only)
-- `/patients` — patient list; `/patients/add`
-- `/prescriptions` — pending/billed/all queue; `/prescriptions/add` (dynamic multi-medicine form); `/prescriptions/<id>` detail
-- `/prescriptions/<id>/bill` — generate a bill with live discount/tax preview, checks stock, deducts inventory
-- `/bills`, `/bills/<id>` — bill history and a printable receipt
-- `/reports` — sales summary, top-selling medicines, revenue by payment method, low-stock report (Admin only)
-- `/users` — staff account management (Admin only)
+### 📋 Prescription Management
+- Create prescriptions
+- View prescriptions
+- Manage prescription details
+- Connect prescriptions with patients and medicines
 
-## Notes
+### 🧾 Billing System
+- Create customer bills
+- Add medicines to bills
+- Calculate billing totals
+- Generate bill receipts
+- Maintain billing records
 
-- `pharmacy.db` is created automatically on first run in the project folder. Delete it to reset all data.
-- Passwords are hashed with Werkzeug's `generate_password_hash` (PBKDF2) — safe for real use, unlike a plain SHA-256 demo hash.
-- The Flask dev server (`app.run(debug=True)`) is fine for local testing. For real deployment, run behind a production WSGI server (e.g. `gunicorn app:app`) and set a proper `app.secret_key` via an environment variable instead of the hardcoded dev value in `app.py`.
+### 📊 Reports & Dashboard
+- Pharmacy dashboard
+- Medicine inventory overview
+- Patient statistics
+- Billing information
+- Pharmacy reports
+
+### ⚠️ Error Handling
+- Custom error pages
+- Form validation
+- User-friendly error messages
+
+---
+
+## 🛠️ Technology Stack
+
+| Technology | Purpose |
+|------------|---------|
+| 🐍 Python | Backend programming |
+| 🌐 Flask | Web application framework |
+| 🗄️ SQLite | Database |
+| 🧱 HTML5 | Page structure |
+| 🎨 CSS3 | Styling |
+| ⚡ JavaScript | Client-side functionality |
+| 🔧 Git | Version control |
+| 🐙 GitHub | Source code hosting |
+
+---
+
+## 🏗️ Project Architecture
+
+```text
+pharmacy-management-system/
+│
+├── app.py                  # Flask application
+├── database.py             # Database operations
+├── requirements.txt        # Python dependencies
+├── pharmacy.db             # Local SQLite database
+├── README.md               # Project documentation
+├── .gitignore              # Git ignored files
+│
+├── static/
+│   └── style.css           # Application styles
+│
+└── templates/
+    ├── base.html
+    ├── login.html
+    ├── dashboard.html
+    ├── medicines.html
+    ├── medicine_form.html
+    ├── patients.html
+    ├── patient_form.html
+    ├── prescriptions.html
+    ├── prescription_form.html
+    ├── prescription_detail.html
+    ├── bills.html
+    ├── billing_form.html
+    ├── bill_receipt.html
+    ├── users.html
+    ├── user_form.html
+    ├── reports.html
+    └── error.html
